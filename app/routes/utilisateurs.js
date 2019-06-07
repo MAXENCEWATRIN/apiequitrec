@@ -4,7 +4,7 @@ var model = require('../models/index');
 
 const errHandler = (err) => console.error("Error : ", err);
 
-/* GET todo listing. */
+//Tous les utilisateurs
 router.get('/', function (req, res, next) {
     model.utilisateur.findAll({})
         .then(utilisateurs => res.json({
@@ -18,15 +18,8 @@ router.get('/', function (req, res, next) {
         }));
 });
 
-
-/* POST todo. */
-router.post('/', function (req, res, next) {
-
-});
-
-
-/* update todo. */
-router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req, res) => {
+//inscription
+router.post('/inscription/:identifiant/:motdepasse/:role', (req, res) => {
     var identifiant = req.params.identifiant;
     var motDePasse = req.params.motdepasse;
     var role = req.params.role;
@@ -35,9 +28,10 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
     model.utilisateur.findAll({ where: { identifiant: identifiant, motdepasse: motDePasse } })
         .then((result) => {
             if (result.length > 0) {
-                res.json({ 'response': { 'type': 'false', 'message': 'Identifiant déjà utilisé.' } });
-                console.log(result.length);
-                console.log(result.utilisateur);
+                res.json({
+                    error: false,
+                    data: 'utilisateur existant'
+                });
             } else {
                 model.utilisateur.create({
                     identifiant: identifiant,
@@ -49,10 +43,18 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
         }).catch(errHandler);
 });
 
+//Authentification utilisateurs
+router.post('/connexion/:identifiant/:motdepasse', (req, res) => {
+    var identifiant = req.params.identifiant;
+    var motDePasse = req.params.motdepasse;
 
-
-/* GET todo listing. */
-router.delete('/:id', function (req, res, next) {
+    model.utilisateur.findAll({ where: { identifiant: identifiant, motdepasse: motDePasse } })
+        .then((result) => {
+            if (result.length > 0) {
+                res.json({ 'response': { 'type': 'true', 'message': 'utilisateur existant, connexion approuvée' } });
+                console.log(res);
+            }
+        }).catch(errHandler);
 
 });
 

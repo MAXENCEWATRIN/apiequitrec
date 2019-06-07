@@ -12,6 +12,7 @@ var contratsRoutes = require('./routes/contrats');
 var alluresRoutes = require('./routes/allures');
 var stylesRoutes = require('./routes/styles');
 var penalitesRoutes = require('./routes/penalites');
+var epreuvesRoutes = require('./routes/epreuves');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/contrats', contratsRoutes);
 app.use('/allures', alluresRoutes);
 app.use('/styles', stylesRoutes);
 app.use('/penalites', penalitesRoutes);
+app.use('/epreuves', epreuvesRoutes);
 
 
 // catch 404 and forward to error handler

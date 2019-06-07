@@ -8,6 +8,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var utilisateursRoutes = require('./routes/utilisateurs');
 var dossardsRoutes = require('./routes/dossards');
+var contratsRoutes = require('./routes/contrats');
+var alluresRoutes = require('./routes/allures');
+var stylesRoutes = require('./routes/styles');
+var penalitesRoutes = require('./routes/penalites');
 
 var app = express();
 
@@ -25,6 +29,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/utilisateurs', utilisateursRoutes);
 app.use('/dossards', dossardsRoutes);
+app.use('/contrats', contratsRoutes);
+app.use('/allures', alluresRoutes);
+app.use('/styles', stylesRoutes);
+app.use('/penalites', penalitesRoutes);
 
 
 // catch 404 and forward to error handler

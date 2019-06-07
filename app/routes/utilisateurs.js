@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var model = require('../models/index');
 
+const errHandler = (err) => {
+    console.error("Error : ", err);
+};
+
 /* GET todo listing. */
 router.get('/', function(req, res, next) {
     model.utilisateur.findAll({})
@@ -34,7 +38,8 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
         .then( (result) => {
             if(result.length > 0){
                 res.json({ 'response': { 'type': 'false', 'message': 'utilisateur existant'} });
-                console.log(res);
+                console.log(result.length);
+                console.log(result.utilisateur);
             }else{
                 model.utilisateur.create({
                     identifiant: identifiant,

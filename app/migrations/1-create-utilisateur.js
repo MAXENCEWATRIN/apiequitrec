@@ -14,7 +14,7 @@ module.exports = {
       motdepasse: {
         type: Sequelize.STRING
       },
-      idrole: {
+      roleId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'roles',

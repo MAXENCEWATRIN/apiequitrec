@@ -7,9 +7,9 @@ const errHandler = (err) => {
 };
 
 //Toutes les epreuves
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 
-    model.epreuves.findAll({})
+    model.epreuve.findAll({})
         .then(epreuves => res.json({
             error: false,
             data: epreuves
@@ -21,40 +21,46 @@ router.get('/', function(req, res, next) {
         }));
 });
 //Inscription Utilisateurs
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
 
 });
 
 
 //trouver une epreuves par son noms
-router.get('/:label', function(req, res, next) {
+router.get('/:label', function (req, res, next) {
     var label = req.params.label;
-    model.epreuves.findAll({where: { label: label}})
-        .then(epreuves => res.json({
-            error: false,
-            data: epreuves
-        }))
-        .catch(error => res.json({
-            error: true,
-            data: [{ 'response': { 'type': 'false', 'message': 'epreuve inexistante'} }],
-            error: error
-        }));
-});
-
-
-//Authentification utilisateurs
-router.post('/authentification/connexion/:identifiant/:motdepasse', (req, res) => {
-    var identifiant = req.params.identifiant;
-    var motDePasse = req.params.motdepasse;
-
-    db.utilisateur.findAll({where: { identifiant: identifiant, motdepasse: motDePasse }})
-        .then( (result) => {
-            if(result.length > 0){
-                res.json({ 'response': { 'type': 'true', 'message': 'utilisateur existant, connexion approuvée'} });
-                console.log(res);
+    model.epreuve.findAll({where: {label: label}})
+        .then((result) => {
+            if (result.length < 1) {
+                res.json({
+                    error: true,
+                    data: 'Epreuve inexistante.'
+                })
+            }else {
+                res.json({
+                    error: false,
+                    data: label
+                })
             }}).catch(errHandler);
-
 });
+//retrouver avec l'id
+router.get('/rechercheid/:id', function (req, res, next) {
+    var id = req.params.id;
+    model.epreuve.findAll({where: {id: id}})
+        .then((result) => {
+            if (result.length < 1) {
+                res.json({
+                    error: true,
+                    data: 'Epreuve inexistante.'
+                })
+            }else {
+                res.json({
+                    error: false,
+                    data: result
+                })
+            }}).catch(errHandler);
+});
+
 
 
 module.exports = router;

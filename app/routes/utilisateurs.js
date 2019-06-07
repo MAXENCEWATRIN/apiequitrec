@@ -30,9 +30,10 @@ router.post('/inscription/:identifiant/:motdepasse/:role', (req, res) => {
     model.utilisateur.findAll({where: { identifiant: identifiant, motdepasse: motDePasse }})
         .then( (result) => {
             if(result.length > 0){
-                res.json({ 'response': { 'type': 'false', 'message': 'Identifiant déjà utilisé.'} });
-                console.log(result.length);
-                console.log(result.utilisateur);
+                res.json({
+                    error: false,
+                    data: 'utilisateur existant'
+                });
             }else{
                 model.utilisateur.create({
                     identifiant: identifiant,

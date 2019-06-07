@@ -37,7 +37,7 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
     model.utilisateur.findAll({where: { identifiant: identifiant, motdepasse: motDePasse }})
         .then( (result) => {
             if(result.length > 0){
-                res.json({ 'response': { 'type': 'false', 'message': 'utilisateur existant'} });
+                res.json({ 'response': { 'type': 'false', 'message': 'Identifiant déjà utilisé.'} });
                 console.log(result.length);
                 console.log(result.utilisateur);
             }else{
@@ -45,7 +45,7 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
                     identifiant: identifiant,
                     motdepasse: motDePasse,
                     roleId: role,
-                }).then(res.json({'response': { 'type': 'true', 'message': 'Utilisateur créé' }}))
+                }).then(res.json({'response': { 'type': 'true', 'message': 'Utilisateur créé.' }}))
                     .catch(errHandler);
             }}).catch(errHandler);
 });

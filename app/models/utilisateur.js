@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     identifiant: DataTypes.STRING,
     motdepasse: DataTypes.STRING
   }, {});
-  utilisateur.associate = function(models) {
-    // associations can be defined here
+  utilisateur.associate = function (models) {
+    utilisateur.belongsTo(models.role);
   };
   return utilisateur;
 };

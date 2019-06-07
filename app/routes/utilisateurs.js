@@ -6,7 +6,7 @@ const errHandler = (err) => {
     console.error("Error : ", err);
 };
 
-/* GET todo listing. */
+//Tous les utilisateurs
 router.get('/', function(req, res, next) {
     model.utilisateur.findAll({})
         .then(utilisateurs => res.json({
@@ -20,15 +20,8 @@ router.get('/', function(req, res, next) {
         }));
 });
 
-
-/* POST todo. */
-router.post('/', function(req, res, next) {
-
-});
-
-
-/* update todo. */
-router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req, res) => {
+//inscription
+router.post('/inscription/:identifiant/:motdepasse/:role', (req, res) => {
     var identifiant = req.params.identifiant;
     var motDePasse = req.params.motdepasse;
     var role = req.params.role;
@@ -52,9 +45,19 @@ router.post('/authentification/inscription/:identifiant/:motdepasse/:role', (req
 
 
 
-/* GET todo listing. */
-router.delete('/:id', function(req, res, next) {
+//Authentification utilisateurs
+router.post('/connexion/:identifiant/:motdepasse', (req, res) => {
+    var identifiant = req.params.identifiant;
+    var motDePasse = req.params.motdepasse;
+
+    model.utilisateur.findAll({where: { identifiant: identifiant, motdepasse: motDePasse }})
+        .then( (result) => {
+            if(result.length > 0){
+                res.json({ 'response': { 'type': 'true', 'message': 'utilisateur existant, connexion approuvée'} });
+                console.log(res);
+            }}).catch(errHandler);
 
 });
+
 
 module.exports = router;

@@ -61,6 +61,33 @@ router.get('/rechercheid/:id', function (req, res, next) {
             }}).catch(errHandler);
 });
 
+//retrouver avec l'id
+router.post('/creer/:label/:dispositif/:login/:password', function (req, res, next) {
+
+    var label = req.params.label;
+    var login = req.params.login;
+    var password = req.params.password;
+    var dispositif = req.params.dispositif;
+    console.log('jkefbzndkslbv;zfeojgbiekzdjlkhcijrvlbioerjvlbv');
+   // if(login.toString() != 'login'|| password.toString() != 'password' ) {
+        console.log('hjihzeohvlciogkeho');
+        model.epreuve.findAll({where: {label: label}})
+            .then((result) => {
+                if (result.length > 0) {
+                    res.json({
+                        error: false,
+                        data: 'epreuve existante'
+                    });
+                } else {
+                    model.epreuve.create({
+                        label: label,
+                        dispositifId: dispositif,
+                    }).then(res.json({'response': {'type': 'true', 'message': 'epreuves créé.'}}))
+                        .catch(errHandler);
+                }
+            }).catch(errHandler);
+  //  }
+});
 
 
 module.exports = router;
